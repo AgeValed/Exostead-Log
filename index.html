@@ -28,7 +28,7 @@
     min-height: 100vh;
   }
   .wrap{
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto;
     padding: 40px 20px 80px;
   }
@@ -80,7 +80,18 @@
   .badge.done .dot{ background: var(--green); }
   .badge.queue .dot{ background: var(--blue); }
 
-  .group{ padding: 4px 20px; }
+  .columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .column{ padding: 4px 20px 24px; }
+  .column.col-done{ border-right: 1px solid var(--border); }
+
+  @media (max-width: 720px){
+    .columns{ grid-template-columns: 1fr; }
+    .column.col-done{ border-right: none; border-bottom: 1px solid var(--border); }
+  }
   .group-header{
     display:flex;
     align-items:center;
@@ -148,13 +159,6 @@
     font-size: 13.5px;
     padding: 10px 8px 24px;
   }
-  footer{
-    margin-top: 18px;
-    text-align:center;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
   @media (max-width: 560px){
     header{ padding: 20px; }
     .group{ padding: 4px 12px; }
@@ -176,11 +180,15 @@
         </div>
       </header>
 
-      <div id="content" class="group">
-        <div class="empty">Cargando…</div>
+      <div class="columns">
+        <div id="colDone" class="column col-done">
+          <div class="empty">Cargando…</div>
+        </div>
+        <div id="colQueue" class="column col-queue">
+          <div class="empty">Cargando…</div>
+        </div>
       </div>
     </div>
-    <footer>Se actualiza a mano, cuando algo queda terminado al 100%</footer>
   </div>
 
 <script>
@@ -244,18 +252,19 @@ Papa.parse("backlog.csv", {
     document.getElementById("doneCount").textContent = done.length;
     document.getElementById("queueCount").textContent = backlog.length;
 
-    let html = "";
-    html += `<div class="group-header done"><span class="dot"></span>Entregado <span class="count">(${done.length})</span></div>`;
-    html += done.length ? renderGroup(done, "#00c875") : `<div class="empty">Todavía nada marcado como entregado.</div>`;
+    let doneHtml = `<div class="group-header done"><span class="dot"></span>Entregado <span class="count">(${done.length})</span></div>`;
+    doneHtml += done.length ? renderGroup(done, "#00c875") : `<div class="empty">Todavía nada marcado como entregado.</div>`;
 
-    html += `<div class="group-header queue"><span class="dot"></span>En la cola <span class="count">(${backlog.length})</span></div>`;
-    html += backlog.length ? renderGroup(backlog, "#0073ea") : `<div class="empty">La cola está vacía.</div>`;
+    let queueHtml = `<div class="group-header queue"><span class="dot"></span>En la cola <span class="count">(${backlog.length})</span></div>`;
+    queueHtml += backlog.length ? renderGroup(backlog, "#0073ea") : `<div class="empty">La cola está vacía.</div>`;
 
-    document.getElementById("content").innerHTML = html;
+    document.getElementById("colDone").innerHTML = doneHtml;
+    document.getElementById("colQueue").innerHTML = queueHtml;
   },
   error: () => {
-    document.getElementById("content").innerHTML =
-      `<div class="error">No se pudo cargar backlog.csv. Verificá que esté en la misma carpeta que este archivo.</div>`;
+    const msg = `<div class="error">No se pudo cargar backlog.csv. Verificá que esté en la misma carpeta que este archivo.</div>`;
+    document.getElementById("colDone").innerHTML = msg;
+    document.getElementById("colQueue").innerHTML = "";
   }
 });
 </script>
