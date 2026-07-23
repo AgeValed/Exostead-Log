@@ -194,7 +194,19 @@
     font-size: 13.5px;
     padding: 10px 8px 24px;
   }
+  .logo-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 8px;
+  }
+  .logo-wrap img{
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    display:block;
+  }
   @media (max-width: 560px){
+    .logo-wrap img{ max-width: 320px; }
     header{ padding: 20px; }
     .group{ padding: 4px 12px; }
     .item{ padding: 12px; }
@@ -203,11 +215,14 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Exostead">
+    </div>
     <div class="board">
       <header>
         <div class="title-block">
           <h1>Feature Backlog</h1>
-          <p>Exostead — avance del desarrollo</p>
+          <p>Avance del desarrollo</p>
         </div>
         <div class="badges">
           <div class="badge done"><span class="dot"></span><span id="doneCount">–</span> entregado</div>
