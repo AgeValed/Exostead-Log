@@ -1,75 +1,75 @@
-order,name,status,category,update,effort,description
-1,"Creacion de personaje",done,Personaje,U11,,"Pantalla para crear el personaje desde el menu"
-2,"Creacion de mundo",done,Mundo,"U11, U15",,"Pantalla para crear un mundo nuevo: eligiendo tamaño, semilla y theme"
-3,"Modo Survival vs Creativo (seleccion)",done,Interfaz,U13,,"Se puede elegir el modo al crear personaje y mundo, y el mundo solo deja entrar personajes de su mismo modo"
-4,"Chat",done,Multijugador,U33,,"Chat entre jugadores, mas mensajes y eventos que manda el servidor"
-5,"Consola de comandos",done,Interfaz,U16,,"Herramienta interna para probar y depurar cosas mas rapido durante el desarrollo"
-6,"Multijugador hasta 6 (en el juego)",done,Multijugador,U10,,"Hasta 6 jugadores pueden compartir el mismo mundo de forma sincronizada, jugando desde el juego"
-7,"Servidor headless (dedicado)",done,Multijugador,U23,,"El mundo se puede hostear 24/7 en una maquina sin necesidad de abrir el juego"
-8,"Sistema de kick y administracion",done,Multijugador,U25,,"Se puede expulsar jugadores del servidor, ver logs, backups y ping"
-9,"Mapa y minimapa",done,Interfaz,U16,,"Mapa completo y minimapa, con fog of war (solo se ve lo ya explorado)"
-10,"Mundo con biomas y agua/lava",improved,Mundo,U15 -> U43,,"El mapa se genera con distintas zonas: llanuras, bosque, desierto, pantano, tundra y zona volcanica, con parches de agua y lava"
-11,"Objetos del mundo configurables",done,Mundo,U75,,"Arboles, rocas y otros objetos del entorno se pueden agregar sin tocar codigo"
-12,"Arboles talables",improved,Recursos,U70 -> U77,,"Los arboles crecen en fases con el tiempo y se pueden cortar para conseguir madera. Mejorado despues con crecimiento por fases y plantado de semillas"
-13,"Yacimientos de roca",improved,Recursos,U71 -> U72-74,,"Depositos de piedra que se pueden minar para conseguir material de construccion. La forma de colision se afino en updates posteriores"
-14,"Materiales basicos (madera, piedra, palo)",done,Recursos,U8,,"Los materiales fisicos de base que se acarrean y usan para craftear"
-15,"Enemigos basicos",improved,Combate,U6 -> U49,,"Criaturas que atacan al jugador. Despues se les cambio el arte (variantes tipo slime)"
-16,"Construccion basica",done,Edificios,"U4, ampliado U63-69",,"Mesa de trabajo, cofre, pared, cerca y muchos edificios mas ya se pueden construir en el mundo"
-17,"Menu de construccion",done,Edificios,U63-69,,"Interfaz para elegir y colocar edificios en el mundo"
-18,"Crafteo flexible",done,Edificios,U65,,"Cualquier edificio con almacenamiento sirve como estacion de crafteo"
-19,"Arte direccional de edificios",improved,Edificios,U52 -> U53-62,,"Los edificios con arte real se ven distinto segun el lado desde el que los mires. Pulido varias veces despues"
-20,"Equipamiento",improved,Combate,U17 -> U78,,"Se puede equipar un arma y items con daño y defensa. Mejorado despues para ser data-driven"
-21,"Inventario y equipo (interfaz)",done,Personaje,"U8, U17, U18",,"Ventanas de inventario y equipo con arrastrar y soltar, tooltips y atajos"
-22,"Personaje portatil",done,Personaje,"U8, U17",,"El inventario, la barra rapida y el equipo viajan con el personaje entre partidas"
-23,"Multilenguaje (ES/EN)",done,Interfaz,U5,,"Todos los textos del juego existen en español e ingles"
-24,"Pantalla de configuracion",done,Interfaz,U12,,"Idioma, audio y reasignar teclas desde una pantalla de settings"
-25,"Vida y estamina",done,Combate,"U12, U34",,"Barras de vida y estamina que se gastan al pelear, correr o esquivar"
-26,"Correr, agacharse y atacar",done,Combate,"U34, U36",,"Movimientos de sprint, sigilo y ataque, con sus animaciones"
-27,"Ciclo de dia, año y horario",done,Mundo,"U31, U31.1, U32",,"Reloj de 24 horas con fases del dia, contador de dias y de años, configurable por mundo"
-28,"Cuevas explorables",done,Exploracion,U20,,"Existen instancias separadas del mundo principal, como cuevas, para explorar, generadas al azar"
-29,"Guardado de partida",done,Persistencia,U7,,"El progreso de personajes y mundos se guarda y se puede retomar despues"
-30,"Sistema de chunks (mapas grandes)",done,Mundo,U80-85,,"El mapa se genera, activa y guarda por partes en vez de todo junto, para poder tener mundos mucho mas grandes sin perder velocidad. Incluye mejoras en como se guardan los objetos del mundo"
-31,"Arte real en personaje, edificios y mundo",done,Arte,"U38, U50, U52-62",,"Reemplazo del arte de prueba por arte real: personaje, texturas de biomas, edificios direccionales e iconos"
-32,"Tema visual claro y oscuro",done,Interfaz,U44,,"La interfaz se puede ver en modo claro u oscuro segun preferencia"
-33,"Diferenciar funcionalidad Survival vs Creativo",backlog,Interfaz,,3,"El modo se elige y se aplica, pero todavia faltan diferencias reales de juego (ej: creativo sin gastar recursos ni tiempo)"
-34,"Primer jefe",backlog,Combate,,5,"Un enemigo grande de fin de zona con su propia pelea"
-35,"Mas enemigos",backlog,Combate,,3,"Nuevos tipos de criaturas ademas de los basicos actuales"
-36,"Clases de combate",backlog,Combate,,5,"Distintos estilos para pelear segun como quieras jugar"
-37,"Drops por tipo de enemigo y cofre",backlog,Combate,,4,"Cada enemigo y cofre va a tener su propia tabla de recompensas. Bloqueado hasta tener sistema de tipos de mob y tiers de cofre"
-38,"Armaduras adicionales",backlog,Combate,,2,"Mas piezas de equipo para defenderse ademas de las actuales"
-39,"Comida y pociones",backlog,Recursos,,3,"Consumibles para curarse o darte ventajas temporales"
-40,"Mas recetas de crafteo",backlog,Edificios,,2,"Ampliar lo que se puede fabricar en las estaciones existentes"
-41,"Mejoras de edificios",backlog,Edificios,,3,"Poder subir de nivel los edificios ya construidos"
-42,"Destruir edificios",backlog,Edificios,,3,"Poder demoler lo construido y recuperar parte del material"
-43,"Sistema de monedas",backlog,Economia,,4,"Una moneda del juego para intercambiar cosas"
-44,"Cosmeticos",backlog,Personaje,,3,"Apariencias para personalizar tu personaje sin afectar el juego"
-45,"Profesiones",backlog,Personaje,,3,"Especializaciones que le dan un rol distinto a cada jugador"
-46,"Razas jugables",backlog,Personaje,,5,"Elegir entre distintas razas al crear el personaje"
-47,"Niveles y arbol de habilidades",backlog,Personaje,,5,"Progresion de estadisticas y habilidades a medida que jugas"
-48,"Segundo bioma tematico",backlog,Mundo,,4,"Una nueva ambientacion completa ademas de la actual"
-49,"Colonia de NPCs",backlog,Contenido,,5,"Personajes no jugables que se pueden sumar a tu base"
-50,"Sistema de misiones",backlog,Contenido,,4,"Objetivos y quests para darle rumbo a la exploracion"
-51,"Optimizaciones en el codigo",backlog,Tecnico,,3,"Revision general de rendimiento y limpieza de partes del codigo"
-52,"Tests con output mientras corren",backlog,Tecnico,,2,"Que los tests muestren informacion util mientras se ejecutan, no solo al final"
-53,"Fix: plantar semilla no funciona",backlog,Recursos,,1,"El plantado de semillas se implemento en Update 77 pero actualmente tiene un bug y no anda"
-54,"Pantalla de carga al crear el mundo",backlog,Interfaz,,2,"Mostrar una pantalla de carga mientras se genera un mundo nuevo"
-55,"Pantalla de carga al entrar al mundo",backlog,Interfaz,,2,"Mostrar una pantalla de carga al entrar a un mundo ya existente"
-56,"Arbustos cosechables de un golpe",backlog,Combate,,1,"Bloqueado: necesita un objeto real de tipo arbusto (G) primero, todavia no existe ninguno"
-57,"Colision al crecer un arbol",backlog,Recursos,,1,"Bloqueado: al crecer, un arbol no chequea si el lugar de al lado sigue libre. Solo importa si se agrega una fase intermedia tipo brote"
-58,"Stats de personaje",backlog,Personaje,,4,"Estadisticas del personaje que dependen de raza, clase y equipo"
-59,"Mas variedad de items",backlog,Recursos,,2,"Sumar mas items en general al juego"
-60,"Sistema de aprender recetas",backlog,Edificios,,3,"Encontrar una receta como item y aprenderla para poder craftearla despues"
-61,"Mejoras a las instancias de exploracion",backlog,Exploracion,,3,"Mejor generacion y mas variedad para las cuevas y otros sub-niveles. Idea: niveles ramificados donde elegir un camino cierra los demas, pero otro mundo con el mismo seed puede abrir un camino distinto"
-62,"POIs (puntos de interes)",backlog,Mundo,,3,"Lugares especiales repartidos por el mundo generado, mas alla de recursos comunes"
-63,"Contenido artesanal insertado a mano",backlog,Mundo,,3,"Zonas o estructuras diseñadas a mano que aparecen en el mundo generado, estilo Romestead"
-64,"Audio y musica",backlog,Audio,,3,"Musica, efectos de sonido y sensacion general de juego (todavia no se empezo)"
-65,"Naturaleza gana terreno",backlog,Mundo,,3,"Zonas sin uso del mundo se van cubriendo de naturaleza con el tiempo"
-66,"Eventos de invasion",backlog,Contenido,,4,"Oleadas de enemigos (ej estilo zombies) que atacan cada cierto tiempo"
-67,"Building interplanetario (portal entre mundos)",backlog,Multijugador,,5,"Un edificio que te deja viajar a otro mapa sin salir por el mapa principal, necesitas el mismo edificio del otro lado para mandar cosas mejores"
-68,"Viajes en el tiempo",backlog,Contenido,,5,"Idea suelta, todavia sin definir como encajaria en el juego"
-69,"Universos paralelos",backlog,Contenido,,5,"Idea suelta inspirada en Stargate, todavia sin definir"
-70,"Fe y rituales",backlog,Contenido,,4,"Sistema de creencias con rituales, por ejemplo para hacer llover"
-71,"Robots recolectores",backlog,Recursos,,4,"Robots que recolectan recursos de forma automatica"
-72,"Creador de robots/ciudadanos",backlog,Personaje,,4,"Fabricar un ciudadano robot con stats al azar, mejores o peores segun la habilidad de quien lo construye"
-73,"Autos",backlog,Recursos,,3,"Vehiculos para moverse mas rapido por el mundo"
-74,"Teleports",backlog,Mundo,,3,"Puntos de teletransporte dentro del mismo mundo"
+order,name,status,category,update,effort,new,description
+1,Creacion de personaje,done,Personaje,U11,,,Pantalla para crear el personaje desde el menu
+2,Creacion de mundo,done,Mundo,"U11, U15",,,"Pantalla para crear un mundo nuevo: eligiendo tamaño, semilla y theme"
+3,Modo Survival vs Creativo (seleccion),done,Interfaz,U13,,,"Se puede elegir el modo al crear personaje y mundo, y el mundo solo deja entrar personajes de su mismo modo"
+4,Chat,done,Multijugador,U33,,,"Chat entre jugadores, mas mensajes y eventos que manda el servidor"
+5,Consola de comandos,done,Interfaz,U16,,,Herramienta interna para probar y depurar cosas mas rapido durante el desarrollo
+6,Multijugador hasta 6 (en el juego),done,Multijugador,U10,,,"Hasta 6 jugadores pueden compartir el mismo mundo de forma sincronizada, jugando desde el juego"
+7,Servidor headless (dedicado),done,Multijugador,U23,,,El mundo se puede hostear 24/7 en una maquina sin necesidad de abrir el juego
+8,Sistema de kick y administracion,done,Multijugador,U25,,,"Se puede expulsar jugadores del servidor, ver logs, backups y ping"
+9,Mapa y minimapa,done,Interfaz,U16,,,"Mapa completo y minimapa, con fog of war (solo se ve lo ya explorado)"
+10,Mundo con biomas y agua/lava,improved,Mundo,U15 -> U43,,,"El mapa se genera con distintas zonas: llanuras, bosque, desierto, pantano, tundra y zona volcanica, con parches de agua y lava"
+11,Objetos del mundo configurables,done,Mundo,U75,,,"Arboles, rocas y otros objetos del entorno se pueden agregar sin tocar codigo"
+12,Arboles talables,improved,Recursos,U70 -> U77,,,Los arboles crecen en fases con el tiempo y se pueden cortar para conseguir madera. Mejorado despues con crecimiento por fases y plantado de semillas
+13,Yacimientos de roca,improved,Recursos,U71 -> U72-74,,,Depositos de piedra que se pueden minar para conseguir material de construccion. La forma de colision se afino en updates posteriores
+14,"Materiales basicos (madera, piedra, palo)",done,Recursos,U8,,,Los materiales fisicos de base que se acarrean y usan para craftear
+15,Enemigos basicos,improved,Combate,U6 -> U49,,,Criaturas que atacan al jugador. Despues se les cambio el arte (variantes tipo slime)
+16,Construccion basica,done,Edificios,"U4, ampliado U63-69",,,"Mesa de trabajo, cofre, pared, cerca y muchos edificios mas ya se pueden construir en el mundo"
+17,Menu de construccion,done,Edificios,U63-69,,,Interfaz para elegir y colocar edificios en el mundo
+18,Crafteo flexible,done,Edificios,U65,,,Cualquier edificio con almacenamiento sirve como estacion de crafteo
+19,Arte direccional de edificios,improved,Edificios,U52 -> U53-62,,,Los edificios con arte real se ven distinto segun el lado desde el que los mires. Pulido varias veces despues
+20,Equipamiento,improved,Combate,U17 -> U78,,,Se puede equipar un arma y items con daño y defensa. Mejorado despues para ser data-driven
+21,Inventario y equipo (interfaz),done,Personaje,"U8, U17, U18",,,"Ventanas de inventario y equipo con arrastrar y soltar, tooltips y atajos"
+22,Personaje portatil,done,Personaje,"U8, U17",,,"El inventario, la barra rapida y el equipo viajan con el personaje entre partidas"
+23,Multilenguaje (ES/EN),done,Interfaz,U5,,,Todos los textos del juego existen en español e ingles
+24,Pantalla de configuracion,done,Interfaz,U12,,,"Idioma, audio y reasignar teclas desde una pantalla de settings"
+25,Vida y estamina,done,Combate,"U12, U34",,,"Barras de vida y estamina que se gastan al pelear, correr o esquivar"
+26,"Correr, agacharse y atacar",done,Combate,"U34, U36",,,"Movimientos de sprint, sigilo y ataque, con sus animaciones"
+27,"Ciclo de dia, año y horario",done,Mundo,"U31, U31.1, U32",,,"Reloj de 24 horas con fases del dia, contador de dias y de años, configurable por mundo"
+28,Cuevas explorables,done,Exploracion,U20,,,"Existen instancias separadas del mundo principal, como cuevas, para explorar, generadas al azar"
+29,Guardado de partida,done,Persistencia,U7,,,El progreso de personajes y mundos se guarda y se puede retomar despues
+30,Sistema de chunks (mapas grandes),done,Mundo,U80-85,,,"El mapa se genera, activa y guarda por partes en vez de todo junto, para poder tener mundos mucho mas grandes sin perder velocidad. Incluye mejoras en como se guardan los objetos del mundo"
+31,"Arte real en personaje, edificios y mundo",done,Arte,"U38, U50, U52-62",,,"Reemplazo del arte de prueba por arte real: personaje, texturas de biomas, edificios direccionales e iconos"
+32,Tema visual claro y oscuro,done,Interfaz,U44,,,La interfaz se puede ver en modo claro u oscuro segun preferencia
+33,Diferenciar funcionalidad Survival vs Creativo,backlog,Interfaz,,3,,"El modo se elige y se aplica, pero todavia faltan diferencias reales de juego (ej: creativo sin gastar recursos ni tiempo)"
+34,Primer jefe,backlog,Combate,,5,,Un enemigo grande de fin de zona con su propia pelea
+35,Mas enemigos,backlog,Combate,,3,,Nuevos tipos de criaturas ademas de los basicos actuales
+36,Clases de combate,backlog,Combate,,5,,Distintos estilos para pelear segun como quieras jugar
+37,Drops por tipo de enemigo y cofre,backlog,Combate,,4,,Cada enemigo y cofre va a tener su propia tabla de recompensas. Bloqueado hasta tener sistema de tipos de mob y tiers de cofre
+38,Armaduras adicionales,backlog,Combate,,2,,Mas piezas de equipo para defenderse ademas de las actuales
+39,Comida y pociones,backlog,Recursos,,3,,Consumibles para curarse o darte ventajas temporales
+40,Mas recetas de crafteo,backlog,Edificios,,2,,Ampliar lo que se puede fabricar en las estaciones existentes
+41,Mejoras de edificios,backlog,Edificios,,3,,Poder subir de nivel los edificios ya construidos
+42,Destruir edificios,backlog,Edificios,,3,,Poder demoler lo construido y recuperar parte del material
+43,Sistema de monedas,backlog,Economia,,4,,Una moneda del juego para intercambiar cosas
+44,Cosmeticos,backlog,Personaje,,3,,Apariencias para personalizar tu personaje sin afectar el juego
+45,Profesiones,backlog,Personaje,,3,,Especializaciones que le dan un rol distinto a cada jugador
+46,Razas jugables,backlog,Personaje,,5,,Elegir entre distintas razas al crear el personaje
+47,Niveles y arbol de habilidades,backlog,Personaje,,5,,Progresion de estadisticas y habilidades a medida que jugas
+48,Segundo bioma tematico,backlog,Mundo,,4,,Una nueva ambientacion completa ademas de la actual
+49,Colonia de NPCs,backlog,Contenido,,5,,Personajes no jugables que se pueden sumar a tu base
+50,Sistema de misiones,backlog,Contenido,,4,,Objetivos y quests para darle rumbo a la exploracion
+51,Optimizaciones en el codigo,done,Tecnico,U86-91,,1,"Se separaron archivos gigantes (World.cs, Main.cs, EntityView.cs) en partes mas chicas organizadas por dominio, y se reagruparon carpetas de comandos y UI por feature, sin cambiar el comportamiento del juego"
+52,Tests con output mientras corren,done,Tecnico,U92,,1,"test.bat en la raiz del repo corre los tests mostrando el resultado de cada uno en vivo, en vez de solo un resumen al final"
+53,Fix: plantar semilla no funciona,backlog,Recursos,,1,,El plantado de semillas se implemento en Update 77 pero actualmente tiene un bug y no anda
+54,Pantalla de carga al crear el mundo,backlog,Interfaz,,2,,Mostrar una pantalla de carga mientras se genera un mundo nuevo
+55,Pantalla de carga al entrar al mundo,backlog,Interfaz,,2,,Mostrar una pantalla de carga al entrar a un mundo ya existente
+56,Arbustos cosechables de un golpe,backlog,Combate,,1,,"Bloqueado: necesita un objeto real de tipo arbusto (G) primero, todavia no existe ninguno"
+57,Colision al crecer un arbol,backlog,Recursos,,1,,"Bloqueado: al crecer, un arbol no chequea si el lugar de al lado sigue libre. Solo importa si se agrega una fase intermedia tipo brote"
+58,Stats de personaje,backlog,Personaje,,4,,"Estadisticas del personaje que dependen de raza, clase y equipo"
+59,Mas variedad de items,backlog,Recursos,,2,,Sumar mas items en general al juego
+60,Sistema de aprender recetas,backlog,Edificios,,3,,Encontrar una receta como item y aprenderla para poder craftearla despues
+61,Mejoras a las instancias de exploracion,backlog,Exploracion,,3,,"Mejor generacion y mas variedad para las cuevas y otros sub-niveles. Idea: niveles ramificados donde elegir un camino cierra los demas, pero otro mundo con el mismo seed puede abrir un camino distinto"
+62,POIs (puntos de interes),backlog,Mundo,,3,,"Lugares especiales repartidos por el mundo generado, mas alla de recursos comunes"
+63,Contenido artesanal insertado a mano,backlog,Mundo,,3,,"Zonas o estructuras diseñadas a mano que aparecen en el mundo generado, estilo Romestead"
+64,Audio y musica,backlog,Audio,,3,,"Musica, efectos de sonido y sensacion general de juego (todavia no se empezo)"
+65,Naturaleza gana terreno,backlog,Mundo,,3,,Zonas sin uso del mundo se van cubriendo de naturaleza con el tiempo
+66,Eventos de invasion,backlog,Contenido,,4,,Oleadas de enemigos (ej estilo zombies) que atacan cada cierto tiempo
+67,Building interplanetario (portal entre mundos),backlog,Multijugador,,5,,"Un edificio que te deja viajar a otro mapa sin salir por el mapa principal, necesitas el mismo edificio del otro lado para mandar cosas mejores"
+68,Viajes en el tiempo,backlog,Contenido,,5,,"Idea suelta, todavia sin definir como encajaria en el juego"
+69,Universos paralelos,backlog,Contenido,,5,,"Idea suelta inspirada en Stargate, todavia sin definir"
+70,Fe y rituales,backlog,Contenido,,4,,"Sistema de creencias con rituales, por ejemplo para hacer llover"
+71,Robots recolectores,backlog,Recursos,,4,,Robots que recolectan recursos de forma automatica
+72,Creador de robots/ciudadanos,backlog,Personaje,,4,,"Fabricar un ciudadano robot con stats al azar, mejores o peores segun la habilidad de quien lo construye"
+73,Autos,backlog,Recursos,,3,,Vehiculos para moverse mas rapido por el mundo
+74,Teleports,backlog,Mundo,,3,,Puntos de teletransporte dentro del mismo mundo

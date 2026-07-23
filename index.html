@@ -127,6 +127,24 @@
     padding: 13px 16px;
     margin-bottom: 8px;
     transition: box-shadow 0.15s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .item.ribboned{ padding-top: 30px; }
+  .ribbon{
+    position: absolute;
+    top: 11px;
+    left: -30px;
+    width: 110px;
+    transform: rotate(-45deg);
+    background: #ff4d4f;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 3px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.18);
   }
   .item:hover{
     box-shadow: 0 4px 14px rgba(30,35,45,0.08);
@@ -288,8 +306,11 @@ function renderGroup(items){
     const updateTag = row.update ? `<span class="update-tag">${escapeHtml(row.update)}</span>` : "";
     const improvedTag = isImproved ? `<span class="improved-tag">Mejorado despues</span>` : "";
     const stars = row.status === "backlog" ? starsFor(row.effort) : "";
+    const isNew = (row.new || "").trim() === "1";
+    const ribbon = isNew ? `<div class="ribbon">NEW</div>` : "";
     return `
-    <div class="item" style="--group-color:${groupColor}">
+    <div class="item ${isNew ? "ribboned" : ""}" style="--group-color:${groupColor}">
+      ${ribbon}
       <div class="main">
         <div class="top">
           <span class="name">${escapeHtml(row.name)}</span>
@@ -316,6 +337,7 @@ Papa.parse("backlog.csv", {
       category: r.category,
       update: r.update,
       effort: r.effort,
+      new: r.new,
       description: r.description
     })).sort((a, b) => a.order - b.order);
 
