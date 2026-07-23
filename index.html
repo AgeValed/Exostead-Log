@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exostead — Feature Backlog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+  :root{
+    --page-bg: #f6f7fb;
+    --card-bg: #ffffff;
+    --border: #e6e9ef;
+    --text: #323338;
+    --muted: #767a86;
+    --green: #00c875;
+    --green-bg: #e0f7ec;
+    --blue: #0073ea;
+    --blue-bg: #e5f1ff;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .board{
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(30,35,45,0.04), 0 8px 24px rgba(30,35,45,0.05);
+    overflow: hidden;
+  }
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 26px 28px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .title-block h1{
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+  .title-block p{
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .badges{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .badge{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 20px;
+  }
+  .badge.done{ background: var(--green-bg); color: #00874e; }
+  .badge.queue{ background: var(--blue-bg); color: #0058b8; }
+  .badge .dot{ width:8px; height:8px; border-radius:50%; }
+  .badge.done .dot{ background: var(--green); }
+  .badge.queue .dot{ background: var(--blue); }
+
+  .group{ padding: 4px 20px; }
+  .group-header{
+    display:flex;
+    align-items:center;
+    gap: 9px;
+    padding: 20px 8px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .group-header .dot{ width:9px; height:9px; border-radius:50%; }
+  .group-header.done{ color: #00874e; }
+  .group-header.done .dot{ background: var(--green); }
+  .group-header.queue{ color: #0058b8; }
+  .group-header.queue .dot{ background: var(--blue); }
+  .group-header .count{
+    font-weight: 500;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--group-color);
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin-bottom: 8px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .item:hover{
+    box-shadow: 0 4px 14px rgba(30,35,45,0.08);
+    transform: translateY(-1px);
+  }
+  .item .main{ flex: 1; min-width: 0; }
+  .item .top{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .item .name{ font-weight: 600; font-size: 14.5px; color: var(--text); }
+  .item .desc{
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .pill{
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .empty, .error{
+    color: var(--muted);
+    font-size: 13.5px;
+    padding: 10px 8px 24px;
+  }
+  footer{
+    margin-top: 18px;
+    text-align:center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 560px){
+    header{ padding: 20px; }
+    .group{ padding: 4px 12px; }
+    .item{ padding: 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="board">
+      <header>
+        <div class="title-block">
+          <h1>Feature Backlog</h1>
+          <p>Exostead — avance del desarrollo</p>
+        </div>
+        <div class="badges">
+          <div class="badge done"><span class="dot"></span><span id="doneCount">–</span> entregado</div>
+          <div class="badge queue"><span class="dot"></span><span id="queueCount">–</span> en la cola</div>
+        </div>
+      </header>
+
+      <div id="content" class="group">
+        <div class="empty">Cargando…</div>
+      </div>
+    </div>
+    <footer>Se actualiza a mano, cuando algo queda terminado al 100%</footer>
+  </div>
+
+<script>
+const CATEGORY_COLORS = {
+  "mundo": "#0073ea",
+  "recursos": "#00c875",
+  "edificios": "#fdab3d",
+  "combate": "#e2445c",
+  "personaje": "#a25dd0",
+  "multijugador": "#007fa3",
+  "exploracion": "#ff642e",
+  "persistencia": "#676879",
+  "interfaz": "#3b3f78",
+  "economia": "#c4880c",
+  "contenido": "#7f5347"
+};
+
+function colorFor(category){
+  const key = (category || "").trim().toLowerCase();
+  if (CATEGORY_COLORS[key]) return CATEGORY_COLORS[key];
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) hash = key.charCodeAt(i) + ((hash << 5) - hash);
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 60%, 42%)`;
+}
+
+function escapeHtml(str){
+  const div = document.createElement("div");
+  div.textContent = str || "";
+  return div.innerHTML;
+}
+
+function renderGroup(items, groupColor){
+  return items.map(row => `
+    <div class="item" style="--group-color:${groupColor}">
+      <div class="main">
+        <div class="top">
+          <span class="name">${escapeHtml(row.name)}</span>
+          <span class="pill" style="background:${colorFor(row.category)}">${escapeHtml(row.category)}</span>
+        </div>
+        <div class="desc">${escapeHtml(row.description)}</div>
+      </div>
+    </div>`).join("");
+}
+
+Papa.parse("backlog.csv", {
+  download: true,
+  header: true,
+  skipEmptyLines: true,
+  complete: (results) => {
+    const rows = results.data.map(r => ({
+      name: r.name,
+      status: (r.status || "").trim().toLowerCase(),
+      category: r.category,
+      description: r.description
+    }));
+
+    const done = rows.filter(r => r.status === "done");
+    const backlog = rows.filter(r => r.status === "backlog");
+
+    document.getElementById("doneCount").textContent = done.length;
+    document.getElementById("queueCount").textContent = backlog.length;
+
+    let html = "";
+    html += `<div class="group-header done"><span class="dot"></span>Entregado <span class="count">(${done.length})</span></div>`;
+    html += done.length ? renderGroup(done, "#00c875") : `<div class="empty">Todavía nada marcado como entregado.</div>`;
+
+    html += `<div class="group-header queue"><span class="dot"></span>En la cola <span class="count">(${backlog.length})</span></div>`;
+    html += backlog.length ? renderGroup(backlog, "#0073ea") : `<div class="empty">La cola está vacía.</div>`;
+
+    document.getElementById("content").innerHTML = html;
+  },
+  error: () => {
+    document.getElementById("content").innerHTML =
+      `<div class="error">No se pudo cargar backlog.csv. Verificá que esté en la misma carpeta que este archivo.</div>`;
+  }
+});
+</script>
+</body>
+</html>
