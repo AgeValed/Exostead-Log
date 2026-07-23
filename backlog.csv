@@ -52,8 +52,8 @@ order,name,status,category,update,effort,new,description
 51,Optimizaciones en el codigo,done,Tecnico,U86-91,,1,"Se separaron archivos gigantes (World.cs, Main.cs, EntityView.cs) en partes mas chicas organizadas por dominio, y se reagruparon carpetas de comandos y UI por feature, sin cambiar el comportamiento del juego"
 52,Tests con output mientras corren,done,Tecnico,U92,,1,"test.bat en la raiz del repo corre los tests mostrando el resultado de cada uno en vivo, en vez de solo un resumen al final"
 53,Fix: plantar semilla no funciona,backlog,Recursos,,1,,El plantado de semillas se implemento en Update 77 pero actualmente tiene un bug y no anda
-54,Pantalla de carga al crear el mundo,backlog,Interfaz,,2,,Mostrar una pantalla de carga mientras se genera un mundo nuevo
-55,Pantalla de carga al entrar al mundo,backlog,Interfaz,,2,,Mostrar una pantalla de carga al entrar a un mundo ya existente
+54,Pantalla de carga al crear el mundo,done,Interfaz,U93,,1,Se muestra una pantalla de carga con progreso real mientras se genera un mundo nuevo
+55,Pantalla de carga al entrar al mundo,done,Interfaz,U93,,1,Se muestra una pantalla de carga con progreso real al entrar a un mundo ya existente
 56,Arbustos cosechables de un golpe,backlog,Combate,,1,,"Bloqueado: necesita un objeto real de tipo arbusto (G) primero, todavia no existe ninguno"
 57,Colision al crecer un arbol,backlog,Recursos,,1,,"Bloqueado: al crecer, un arbol no chequea si el lugar de al lado sigue libre. Solo importa si se agrega una fase intermedia tipo brote"
 58,Stats de personaje,backlog,Personaje,,4,,"Estadisticas del personaje que dependen de raza, clase y equipo"
