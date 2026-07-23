@@ -18,6 +18,10 @@
     --green-bg: #e0f7ec;
     --blue: #0073ea;
     --blue-bg: #e5f1ff;
+    --violet: #a25dd0;
+    --violet-bg: #f3e8fb;
+    --star-on: #fdab3d;
+    --star-off: #e0e2e8;
   }
   *{ box-sizing: border-box; }
   body{
@@ -153,6 +157,37 @@
     border-radius: 6px;
     white-space: nowrap;
   }
+  .update-tag{
+    flex-shrink: 0;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--muted);
+    background: #f0f1f5;
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+  }
+  .improved-tag{
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: #7a3aa8;
+    background: var(--violet-bg);
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .stars{
+    flex-shrink: 0;
+    font-size: 13px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .stars .on{ color: var(--star-on); }
+  .stars .off{ color: var(--star-off); }
 
   .empty, .error{
     color: var(--muted);
@@ -176,7 +211,7 @@
         </div>
         <div class="badges">
           <div class="badge done"><span class="dot"></span><span id="doneCount">–</span> entregado</div>
-          <div class="badge queue"><span class="dot"></span><span id="queueCount">–</span> en la cola</div>
+          <div class="badge queue"><span class="dot"></span><span id="queueCount">–</span> en el Backlog</div>
         </div>
       </header>
 
@@ -221,17 +256,35 @@ function escapeHtml(str){
   return div.innerHTML;
 }
 
-function renderGroup(items, groupColor){
-  return items.map(row => `
+function starsFor(effort){
+  const n = parseInt(effort, 10);
+  if (!n || n < 1) return "";
+  const filled = "★".repeat(Math.min(n, 5));
+  const empty = "☆".repeat(Math.max(0, 5 - n));
+  return `<span class="stars"><span class="on">${filled}</span><span class="off">${empty}</span></span>`;
+}
+
+function renderGroup(items){
+  return items.map(row => {
+    const isImproved = row.status === "improved";
+    const groupColor = isImproved ? "var(--violet)" : (row.status === "done" ? "var(--green)" : "var(--blue)");
+    const updateTag = row.update ? `<span class="update-tag">${escapeHtml(row.update)}</span>` : "";
+    const improvedTag = isImproved ? `<span class="improved-tag">Mejorado despues</span>` : "";
+    const stars = row.status === "backlog" ? starsFor(row.effort) : "";
+    return `
     <div class="item" style="--group-color:${groupColor}">
       <div class="main">
         <div class="top">
           <span class="name">${escapeHtml(row.name)}</span>
           <span class="pill" style="background:${colorFor(row.category)}">${escapeHtml(row.category)}</span>
+          ${updateTag}
+          ${improvedTag}
+          ${stars}
         </div>
         <div class="desc">${escapeHtml(row.description)}</div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
 
 Papa.parse("backlog.csv", {
@@ -240,23 +293,26 @@ Papa.parse("backlog.csv", {
   skipEmptyLines: true,
   complete: (results) => {
     const rows = results.data.map(r => ({
+      order: parseInt(r.order, 10) || 0,
       name: r.name,
       status: (r.status || "").trim().toLowerCase(),
       category: r.category,
+      update: r.update,
+      effort: r.effort,
       description: r.description
-    }));
+    })).sort((a, b) => a.order - b.order);
 
-    const done = rows.filter(r => r.status === "done");
+    const done = rows.filter(r => r.status === "done" || r.status === "improved");
     const backlog = rows.filter(r => r.status === "backlog");
 
     document.getElementById("doneCount").textContent = done.length;
     document.getElementById("queueCount").textContent = backlog.length;
 
     let doneHtml = `<div class="group-header done"><span class="dot"></span>Entregado <span class="count">(${done.length})</span></div>`;
-    doneHtml += done.length ? renderGroup(done, "#00c875") : `<div class="empty">Todavía nada marcado como entregado.</div>`;
+    doneHtml += done.length ? renderGroup(done) : `<div class="empty">Todavía nada marcado como entregado.</div>`;
 
-    let queueHtml = `<div class="group-header queue"><span class="dot"></span>En la cola <span class="count">(${backlog.length})</span></div>`;
-    queueHtml += backlog.length ? renderGroup(backlog, "#0073ea") : `<div class="empty">La cola está vacía.</div>`;
+    let queueHtml = `<div class="group-header queue"><span class="dot"></span>Backlog <span class="count">(${backlog.length})</span></div>`;
+    queueHtml += backlog.length ? renderGroup(backlog) : `<div class="empty">El backlog está vacío.</div>`;
 
     document.getElementById("colDone").innerHTML = doneHtml;
     document.getElementById("colQueue").innerHTML = queueHtml;
