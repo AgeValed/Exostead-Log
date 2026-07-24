@@ -51,12 +51,12 @@ order,name,status,category,update,effort,new,description
 50,Sistema de misiones,backlog,Contenido,,4,,Objetivos y quests para darle rumbo a la exploracion
 51,Optimizaciones en el codigo,done,Tecnico,U86-91,,1,"Se separaron archivos gigantes (World.cs, Main.cs, EntityView.cs) en partes mas chicas organizadas por dominio, y se reagruparon carpetas de comandos y UI por feature, sin cambiar el comportamiento del juego"
 52,Tests con output mientras corren,done,Tecnico,U92,,1,"test.bat en la raiz del repo corre los tests mostrando el resultado de cada uno en vivo, en vez de solo un resumen al final"
-53,Fix: plantar semilla no funciona,backlog,Recursos,,1,,El plantado de semillas se implemento en Update 77 pero actualmente tiene un bug y no anda
+53,Fix: plantar semilla no funciona,done,Recursos,U94,,1,"Investigado en Update 94: no era un bug de codigo, el plantado funciona bien (probado headless). Lo que faltaba era feedback visual claro al presionar E, por eso parecia roto"
 54,Pantalla de carga al crear el mundo,done,Interfaz,U93,,1,Se muestra una pantalla de carga con progreso real mientras se genera un mundo nuevo
 55,Pantalla de carga al entrar al mundo,done,Interfaz,U93,,1,Se muestra una pantalla de carga con progreso real al entrar a un mundo ya existente
 56,Arbustos cosechables de un golpe,backlog,Combate,,1,,"Bloqueado: necesita un objeto real de tipo arbusto (G) primero, todavia no existe ninguno"
 57,Colision al crecer un arbol,backlog,Recursos,,1,,"Bloqueado: al crecer, un arbol no chequea si el lugar de al lado sigue libre. Solo importa si se agrega una fase intermedia tipo brote"
-58,Stats de personaje,backlog,Personaje,,4,,"Estadisticas del personaje que dependen de raza, clase y equipo"
+58,Stats de personaje,done,Personaje,U95-101,,1,"Atributos, stats derivados y ficha de personaje (U95). Ya afecta el juego de verdad: vida maxima, estamina, velocidad y daño cuerpo a cuerpo (U101). El resto de los stats derivados siguen solo visuales hasta que exista el sistema que los use"
 59,Mas variedad de items,backlog,Recursos,,2,,Sumar mas items en general al juego
 60,Sistema de aprender recetas,backlog,Edificios,,3,,Encontrar una receta como item y aprenderla para poder craftearla despues
 61,Mejoras a las instancias de exploracion,backlog,Exploracion,,3,,"Mejor generacion y mas variedad para las cuevas y otros sub-niveles. Idea: niveles ramificados donde elegir un camino cierra los demas, pero otro mundo con el mismo seed puede abrir un camino distinto"
@@ -73,3 +73,16 @@ order,name,status,category,update,effort,new,description
 72,Creador de robots/ciudadanos,backlog,Personaje,,4,,"Fabricar un ciudadano robot con stats al azar, mejores o peores segun la habilidad de quien lo construye"
 73,Autos,backlog,Recursos,,3,,Vehiculos para moverse mas rapido por el mundo
 74,Teleports,backlog,Mundo,,3,,Puntos de teletransporte dentro del mismo mundo
+75,Fix: chat tapaba otras ventanas,done,Interfaz,U94,,1,"El chat se dibujaba siempre encima de inventario, edificios y demas paneles. Ahora solo tiene prioridad cuando el jugador lo tiene realmente abierto, si no queda ultimo"
+76,Fix: mundo cargado sin indice de chunk,done,Tecnico,U99,,1,"Un mundo cargado desde un guardado no armaba su indice de chunks, lo que rompia cosas que dependen de el"
+77,Checklist de smoke test manual,backlog,Tecnico,,2,,"Lista corta de acciones del jugador (talar, minar, craftear, construir, morir, guardar, entrar a una cueva) para correr antes de pushear. Toda feature nueva agrega su verbo a la lista"
+78,Versionado independiente de personaje y mundo,backlog,Persistencia,,4,,"Hoy la compatibilidad de un guardado es todo o nada. La idea: version de personaje y de mundo por separado, con estados Compatible / Hay actualizacion / Incompatible, boton de actualizar si se puede migrar, o poder borrarlo si no"
+79,Weight y capacidad de carga,backlog,Personaje,,3,,Cada item pesa algo y el personaje tiene un limite de carga. Pasarse penaliza (menos velocidad o no poder moverse). Candidato a conectarse con el sistema de stats como un derivado nuevo
+80,No se pueden abrir dos ventanas al mismo tiempo,backlog,Interfaz,,3,,"Regla de diseño: abrir una ventana deberia cerrar cualquier otra ya abierta. Hoy la ficha de personaje ya lo hace, falta llevarlo a todas las ventanas de forma pareja"
+81,Reorganizar Core/ en subcarpetas,backlog,Tecnico,,2,,"Mismo criterio que ya se aplico a Data/, pero en Core/ (unos 15 archivos sueltos). No urgente"
+82,Guard de estructura de carpetas + revisar tests/,backlog,Tecnico,,1,,"Una regla que avise si una carpeta ya organizada (como Data/) vuelve a acumular archivos sueltos. De paso, revisar si tests/ (hoy plano a proposito) conviene agrupar tambien"
+83,Frontera contenido oficial vs datos de usuario (y soporte de mods),backlog,Tecnico,,4,,"Definir que es contenido del juego (stats, recetas, edificios) vs datos del jugador (personajes, mundos, configuracion), para poder soportar mods como una capa aparte mas adelante"
+84,Optimizar fog del minimapa/mapa,backlog,Tecnico,,2,,El overlay de niebla del mapa y minimapa todavia recorre el mapa completo en cada cambio. Se nota mas cuanto mas grande sea el mundo
+85,Cobertura de tests de UI,backlog,Tecnico,,3,,"Todavia no hay tests automaticos de la interfaz (arrastrar items, colocar edificios, ventanas). Hoy se cubre con pruebas manuales"
+86,Job de exportacion automatica en CI,backlog,Tecnico,,2,,"El pipeline no genera todavia un build jugable exportado en cada push, hay que hacerlo a mano desde Godot"
+87,Validar comandos contra cliente modificado,backlog,Tecnico,,3,,"Hoy se valida lo que un jugador manda al entrar, pero no cada comando en vivo contra alguien que mande cosas imposibles. No urgente mientras el multijugador sea solo con amigos"
