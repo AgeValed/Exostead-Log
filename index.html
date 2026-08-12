@@ -68,6 +68,29 @@
     display:flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items:center;
+  }
+  .lang-toggle{
+    display:flex;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  .lang-toggle button{
+    border: none;
+    background: var(--card-bg);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 8px 13px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .lang-toggle button.active{
+    background: var(--text);
+    color: #fff;
   }
   .badge{
     display:flex;
@@ -240,26 +263,81 @@
       <header>
         <div class="title-block">
           <h1>Feature Backlog</h1>
-          <p>Avance del desarrollo</p>
+          <p id="subtitle">Avance del desarrollo</p>
         </div>
         <div class="badges">
-          <div class="badge done"><span class="dot"></span><span id="doneCount">–</span> entregado</div>
-          <div class="badge queue"><span class="dot"></span><span id="queueCount">–</span> en el Backlog</div>
+          <div class="badge done"><span class="dot"></span><span id="doneCount">–</span> <span id="doneLabel">entregado</span></div>
+          <div class="badge queue"><span class="dot"></span><span id="queueCount">–</span> <span id="queueLabel">en el Backlog</span></div>
+          <div class="lang-toggle">
+            <button id="langEs" onclick="setLang('es')">ES</button>
+            <button id="langEn" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </header>
 
       <div class="columns">
         <div id="colDone" class="column col-done">
-          <div class="empty">Cargando…</div>
+          <div class="empty" id="loadingDone">Cargando…</div>
         </div>
         <div id="colQueue" class="column col-queue">
-          <div class="empty">Cargando…</div>
+          <div class="empty" id="loadingQueue">Cargando…</div>
         </div>
       </div>
     </div>
   </div>
 
 <script>
+const UI_STRINGS = {
+  es: {
+    subtitle: "Avance del desarrollo",
+    done: "entregado",
+    queue: "en el Backlog",
+    loading: "Cargando…",
+    doneHeader: "Entregado",
+    queueHeader: "Backlog",
+    improved: "Mejorado despues",
+    emptyDone: "Todavía nada marcado como entregado.",
+    emptyQueue: "El backlog está vacío.",
+    error: "No se pudo cargar backlog.csv. Verificá que esté en la misma carpeta que este archivo."
+  },
+  en: {
+    subtitle: "Development progress",
+    done: "shipped",
+    queue: "in the Backlog",
+    loading: "Loading…",
+    doneHeader: "Shipped",
+    queueHeader: "Backlog",
+    improved: "Improved later",
+    emptyDone: "Nothing marked as shipped yet.",
+    emptyQueue: "The backlog is empty.",
+    error: "Couldn't load backlog.csv. Check that it's in the same folder as this file."
+  }
+};
+
+const CATEGORY_LABELS = {
+  es: {
+    mundo: "Mundo", recursos: "Recursos", edificios: "Edificios", combate: "Combate",
+    personaje: "Personaje", multijugador: "Multijugador", exploracion: "Exploracion",
+    persistencia: "Persistencia", interfaz: "Interfaz", economia: "Economia",
+    contenido: "Contenido", audio: "Audio", arte: "Arte", tecnico: "Tecnico"
+  },
+  en: {
+    mundo: "World", recursos: "Resources", edificios: "Buildings", combate: "Combat",
+    personaje: "Character", multijugador: "Multiplayer", exploracion: "Exploration",
+    persistencia: "Persistence", interfaz: "Interface", economia: "Economy",
+    contenido: "Content", audio: "Audio", arte: "Art", tecnico: "Technical"
+  }
+};
+
+let currentLang = localStorage.getItem("exostead-lang") || "es";
+let currentRows = null;
+
+function categoryLabel(category){
+  const key = (category || "").trim().toLowerCase();
+  const table = CATEGORY_LABELS[currentLang];
+  return table[key] || category;
+}
+
 const CATEGORY_COLORS = {
   "mundo": "#0073ea",
   "recursos": "#00c875",
@@ -273,7 +351,8 @@ const CATEGORY_COLORS = {
   "economia": "#c4880c",
   "contenido": "#7f5347",
   "audio": "#ff158a",
-  "arte": "#00a3bf"
+  "arte": "#00a3bf",
+  "tecnico": "#5b6b73"
 };
 
 function colorFor(category){
@@ -300,66 +379,96 @@ function starsFor(effort){
 }
 
 function renderGroup(items){
+  const t = UI_STRINGS[currentLang];
   return items.map(row => {
     const isImproved = row.status === "improved";
     const groupColor = isImproved ? "var(--violet)" : (row.status === "done" ? "var(--green)" : "var(--blue)");
     const updateTag = row.update ? `<span class="update-tag">${escapeHtml(row.update)}</span>` : "";
-    const improvedTag = isImproved ? `<span class="improved-tag">Mejorado despues</span>` : "";
+    const improvedTag = isImproved ? `<span class="improved-tag">${escapeHtml(t.improved)}</span>` : "";
     const stars = row.status === "backlog" ? starsFor(row.effort) : "";
     const isNew = (row.new || "").trim() === "1";
     const ribbon = isNew ? `<div class="ribbon">NEW</div>` : "";
+    const displayName = currentLang === "en" && row.name_en ? row.name_en : row.name;
+    const displayDesc = currentLang === "en" && row.description_en ? row.description_en : row.description;
     return `
     <div class="item ${isNew ? "ribboned" : ""}" style="--group-color:${groupColor}">
       ${ribbon}
       <div class="main">
         <div class="top">
-          <span class="name">${escapeHtml(row.name)}</span>
-          <span class="pill" style="background:${colorFor(row.category)}">${escapeHtml(row.category)}</span>
+          <span class="name">${escapeHtml(displayName)}</span>
+          <span class="pill" style="background:${colorFor(row.category)}">${escapeHtml(categoryLabel(row.category))}</span>
           ${updateTag}
           ${improvedTag}
           ${stars}
         </div>
-        <div class="desc">${escapeHtml(row.description)}</div>
+        <div class="desc">${escapeHtml(displayDesc)}</div>
       </div>
     </div>`;
   }).join("");
 }
+
+function renderAll(){
+  const t = UI_STRINGS[currentLang];
+  document.documentElement.lang = currentLang;
+  document.getElementById("subtitle").textContent = t.subtitle;
+  document.getElementById("doneLabel").textContent = t.done;
+  document.getElementById("queueLabel").textContent = t.queue;
+  document.getElementById("langEs").classList.toggle("active", currentLang === "es");
+  document.getElementById("langEn").classList.toggle("active", currentLang === "en");
+
+  if (!currentRows){
+    document.getElementById("colDone").innerHTML = `<div class="empty">${t.loading}</div>`;
+    document.getElementById("colQueue").innerHTML = `<div class="empty">${t.loading}</div>`;
+    return;
+  }
+
+  const done = currentRows.filter(r => r.status === "done" || r.status === "improved")
+    .sort((a, b) => b.order - a.order);
+  const backlog = currentRows.filter(r => r.status === "backlog");
+
+  document.getElementById("doneCount").textContent = done.length;
+  document.getElementById("queueCount").textContent = backlog.length;
+
+  let doneHtml = `<div class="group-header done"><span class="dot"></span>${t.doneHeader} <span class="count">(${done.length})</span></div>`;
+  doneHtml += done.length ? renderGroup(done) : `<div class="empty">${t.emptyDone}</div>`;
+
+  let queueHtml = `<div class="group-header queue"><span class="dot"></span>${t.queueHeader} <span class="count">(${backlog.length})</span></div>`;
+  queueHtml += backlog.length ? renderGroup(backlog) : `<div class="empty">${t.emptyQueue}</div>`;
+
+  document.getElementById("colDone").innerHTML = doneHtml;
+  document.getElementById("colQueue").innerHTML = queueHtml;
+}
+
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem("exostead-lang", lang);
+  renderAll();
+}
+
+renderAll();
 
 Papa.parse("backlog.csv", {
   download: true,
   header: true,
   skipEmptyLines: true,
   complete: (results) => {
-    const rows = results.data.map(r => ({
+    currentRows = results.data.map(r => ({
       order: parseInt(r.order, 10) || 0,
       name: r.name,
+      name_en: r.name_en,
       status: (r.status || "").trim().toLowerCase(),
       category: r.category,
       update: r.update,
       effort: r.effort,
       new: r.new,
-      description: r.description
+      description: r.description,
+      description_en: r.description_en
     })).sort((a, b) => a.order - b.order);
-
-    const done = rows.filter(r => r.status === "done" || r.status === "improved")
-      .sort((a, b) => b.order - a.order);
-    const backlog = rows.filter(r => r.status === "backlog");
-
-    document.getElementById("doneCount").textContent = done.length;
-    document.getElementById("queueCount").textContent = backlog.length;
-
-    let doneHtml = `<div class="group-header done"><span class="dot"></span>Entregado <span class="count">(${done.length})</span></div>`;
-    doneHtml += done.length ? renderGroup(done) : `<div class="empty">Todavía nada marcado como entregado.</div>`;
-
-    let queueHtml = `<div class="group-header queue"><span class="dot"></span>Backlog <span class="count">(${backlog.length})</span></div>`;
-    queueHtml += backlog.length ? renderGroup(backlog) : `<div class="empty">El backlog está vacío.</div>`;
-
-    document.getElementById("colDone").innerHTML = doneHtml;
-    document.getElementById("colQueue").innerHTML = queueHtml;
+    renderAll();
   },
   error: () => {
-    const msg = `<div class="error">No se pudo cargar backlog.csv. Verificá que esté en la misma carpeta que este archivo.</div>`;
-    document.getElementById("colDone").innerHTML = msg;
+    const t = UI_STRINGS[currentLang];
+    document.getElementById("colDone").innerHTML = `<div class="error">${t.error}</div>`;
     document.getElementById("colQueue").innerHTML = "";
   }
 });
